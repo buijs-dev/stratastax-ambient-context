@@ -1,0 +1,28 @@
+[versions]
+#noinspection UnusedVersionCatalogEntry
+stratastax-ambient-context = "1.0.0-SNAPSHOT"
+assertj = "3.27.7"
+junit = "6.1.2"
+kotlin = "2.3.20"
+kotlinx-coroutines = "1.10.2"
+smallrye = "3.3.0"
+spotless = "8.2.1"
+
+[libraries]
+assertj = { group = "org.assertj", name = "assertj-core", version.ref = "assertj"}
+junit-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit"}
+junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit"}
+junit-params = { group = "org.junit.jupiter", name = "junit-jupiter-params", version.ref = "junit"}
+junit-platform = { group = "org.junit.platform", name = "junit-platform-launcher", version.ref = "junit"}
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines"}
+smallrye-mutiny-kotlin = { group = "io.smallrye.reactive", name = "mutiny-kotlin", version.ref = "smallrye"}
+
+# Plugins which are added as dependencies in the root build.gradle.kts so they can be applied as plugin by scripts in src/main/kotlin
+kotlin-plugin-jvm = { group = "org.jetbrains.kotlin.jvm", name = "org.jetbrains.kotlin.jvm.gradle.plugin", version.ref = "kotlin" }
+spotless-plugin = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
+
+[plugins]
+###
+
+[bundles]
+test = ["assertj", "junit-api", "junit-engine", "junit-params", "junit-platform"]
