@@ -16,9 +16,9 @@
  */
 package dev.buijs.stratastax.ambient.context.api
 
+import kotlinx.coroutines.currentCoroutineContext
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlinx.coroutines.currentCoroutineContext
 
 /**
  * Supplies a specific piece of ambient data (such as a request ID or security context).

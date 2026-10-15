@@ -16,13 +16,13 @@
  */
 package dev.buijs.stratastax.ambient.context.api
 
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import kotlin.coroutines.CoroutineContext
 
 internal class PropagatedContextElementTest {
 
@@ -57,7 +57,10 @@ internal class PropagatedContextElementTest {
     }
 }
 
-private class TestElement(val value: String) : PropagatedContextElement {
+private class TestElement(
+    val value: String,
+) : PropagatedContextElement {
+
     companion object Key : CoroutineContext.Key<TestElement>
 
     override val key: CoroutineContext.Key<TestElement>

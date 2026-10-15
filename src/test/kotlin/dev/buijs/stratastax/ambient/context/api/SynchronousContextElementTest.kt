@@ -17,12 +17,12 @@
 package dev.buijs.stratastax.ambient.context.api
 
 import io.smallrye.mutiny.coroutines.awaitSuspending
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import kotlin.coroutines.CoroutineContext
 
 private val testThreadLocal = ThreadLocal<String?>()
 
@@ -50,6 +50,7 @@ internal class SynchronousContextElementTest {
     fun `is restored to null after the installing block exits`() {
         runBlocking {
             withContext(TestSyncElement("carried")) {}
+
             assertThat(readSynchronously()).isNull()
         }
     }
@@ -58,6 +59,7 @@ internal class SynchronousContextElementTest {
     fun `is readable synchronously from plain code inside an inheritedUni block`() {
         runBlocking {
             val uni = inheritedUni(TestSyncElement("carried")) { readSynchronously() }
+
             val result = uni.awaitSuspending()
             assertThat(result).isEqualTo("carried")
         }
@@ -66,8 +68,9 @@ internal class SynchronousContextElementTest {
 
 private fun readSynchronously(): String? = testThreadLocal.get()
 
-private class TestSyncElement(value: String) :
-    SynchronousContextElement<String?>(testThreadLocal, value) {
+private class TestSyncElement(
+    value: String,
+) : SynchronousContextElement<String?>(testThreadLocal, value) {
 
     companion object Key : CoroutineContext.Key<TestSyncElement>
 

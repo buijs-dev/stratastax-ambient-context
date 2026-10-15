@@ -18,12 +18,12 @@ package dev.buijs.stratastax.ambient.context.api
 
 import io.smallrye.mutiny.Uni
 import io.smallrye.mutiny.coroutines.asUni
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 /**
  * Executes a suspend block as a Mutiny [Uni] while retaining ambient context elements.

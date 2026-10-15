@@ -17,11 +17,6 @@
 package dev.buijs.stratastax.ambient.context.api
 
 import io.smallrye.mutiny.coroutines.awaitSuspending
-import java.util.concurrent.Executors
-import java.util.concurrent.atomic.AtomicInteger
-import kotlin.coroutines.CoroutineContext
-import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.async
@@ -32,6 +27,11 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicInteger
+import kotlin.coroutines.CoroutineContext
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 private val testConcurrencyThreadLocal = ThreadLocal<Int?>()
 
@@ -47,14 +47,12 @@ internal class InheritedUniConcurrencyTest {
                     .map { i ->
                         async {
                             inheritedUni(TestConcurrencyElement(i)) {
-                                    val viaContext = readTestConcurrencyElement()
-                                    val viaSyncGetter = testConcurrencyThreadLocal.get()
-                                    Triple(i, viaContext, viaSyncGetter)
-                                }
-                                .awaitSuspending()
+                                val viaContext = readTestConcurrencyElement()
+                                val viaSyncGetter = testConcurrencyThreadLocal.get()
+                                Triple(i, viaContext, viaSyncGetter)
+                            }.awaitSuspending()
                         }
-                    }
-                    .awaitAll()
+                    }.awaitAll()
 
             results.forEach { (installed, viaContext, viaSyncGetter) ->
                 assertThat(viaContext).isEqualTo(installed)
@@ -81,7 +79,7 @@ internal class InheritedUniConcurrencyTest {
             assertThat(elapsed)
                 .isLessThan((n * delayMs) / 2)
                 .withFailMessage(
-                    "expected well under ${(n * delayMs) / 2}ms if parallel, took ${elapsed}ms"
+                    "expected well under ${(n * delayMs) / 2}ms if parallel, took ${elapsed}ms",
                 )
         }
     }
@@ -103,7 +101,7 @@ internal class InheritedUniConcurrencyTest {
                 assertThat(threadName)
                     .startsWith("custom-test-dispatcher-thread")
                     .withFailMessage(
-                        "expected thread name to start with 'custom-test-dispatcher-thread', was '$threadName'"
+                        "expected thread name to start with 'custom-test-dispatcher-thread', was '$threadName'",
                     )
             } finally {
                 executor.shutdown()
@@ -144,8 +142,10 @@ internal class InheritedUniConcurrencyTest {
     }
 }
 
-private class TestConcurrencyElement(val value: Int) :
-    SynchronousContextElement<Int?>(testConcurrencyThreadLocal, value) {
+private class TestConcurrencyElement(
+    val value: Int,
+) : SynchronousContextElement<Int?>(testConcurrencyThreadLocal, value) {
+
     companion object Key : CoroutineContext.Key<TestConcurrencyElement>
 
     override val key: CoroutineContext.Key<TestConcurrencyElement>

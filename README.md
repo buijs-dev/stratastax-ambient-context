@@ -97,3 +97,10 @@ fun findUser(id: String): Uni<User> =
     }
 ```
 
+## Related Stratastax projects
+
+- [stratastax-quarkus › quarkus-starter](https://github.com/buijs-dev/stratastax-quarkus/tree/main/quarkus-starter) - propagates the ambient context through every generated resource and service call
+- [stratastax-security](https://github.com/buijs-dev/stratastax-security) - carries the security context as an ambient context element
+- [stratastax-http](https://github.com/buijs-dev/stratastax-http) - uses it in the reactive idempotency filter
+- [stratastax-persistence](https://github.com/buijs-dev/stratastax-persistence) - carries the transaction context as an ambient context element
+- [stratastax-style](https://github.com/buijs-dev/stratastax-style) - the Kotlin code style this library is formatted with
