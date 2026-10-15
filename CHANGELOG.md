@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-15
+
 ### Added
 
 First release of Stratastax Ambient Context: building blocks for propagating ambient data
