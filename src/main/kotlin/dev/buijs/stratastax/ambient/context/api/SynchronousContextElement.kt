@@ -16,8 +16,8 @@
  */
 package dev.buijs.stratastax.ambient.context.api
 
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.ThreadContextElement
+import kotlin.coroutines.CoroutineContext
 
 /**
  * A [PropagatedContextElement] that allows synchronous access to context data from non-suspend
@@ -39,7 +39,8 @@ import kotlinx.coroutines.ThreadContextElement
 abstract class SynchronousContextElement<T>(
     private val threadLocal: ThreadLocal<T>,
     private val value: T,
-) : PropagatedContextElement, ThreadContextElement<T> {
+) : PropagatedContextElement,
+    ThreadContextElement<T> {
 
     override fun updateThreadContext(context: CoroutineContext): T {
         val previous = threadLocal.get()
@@ -47,7 +48,10 @@ abstract class SynchronousContextElement<T>(
         return previous
     }
 
-    override fun restoreThreadContext(context: CoroutineContext, oldState: T) {
+    override fun restoreThreadContext(
+        context: CoroutineContext,
+        oldState: T,
+    ) {
         threadLocal.set(oldState)
     }
 }

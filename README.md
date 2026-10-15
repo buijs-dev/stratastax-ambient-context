@@ -1,7 +1,11 @@
 # Stratastax Ambient Context
 
+[![Stratastax](https://img.shields.io/badge/Product-stratastax.dev-4F46E5?style=flat)](https://stratastax.dev/)
 [![](https://img.shields.io/badge/Buijs-Software-blue)](https://buijs.dev/)
 [![GitHub](https://img.shields.io/github/license/buijs-dev/klutter?color=black)](https://github.com/buijs-dev/stratastax-ambient-context/blob/main/LICENSE)
+[![codecov](https://codecov.io/gh/buijs-dev/stratastax-ambient-context/branch/develop/graph/badge.svg?token=p6nMfXwkgR)](https://codecov.io/gh/buijs-dev/stratastax-ambient-context)
+[![CodeScene Average Code Health](https://codescene.io/projects/86126/status-badges/average-code-health)](https://codescene.io/projects/86126)
+[![CodeScene System Mastery](https://codescene.io/projects/86126/status-badges/system-mastery)](https://codescene.io/projects/86126)
 
 This module provides a small set of building blocks for propagating "ambient" data
 (request IDs, security context, tenant info, etc.) across coroutine, thread, and
@@ -97,3 +101,10 @@ fun findUser(id: String): Uni<User> =
     }
 ```
 
+## Related Stratastax projects
+
+- [stratastax-quarkus › quarkus-starter](https://github.com/buijs-dev/stratastax-quarkus/tree/main/quarkus-starter) - propagates the ambient context through every generated resource and service call
+- [stratastax-security](https://github.com/buijs-dev/stratastax-security) - carries the security context as an ambient context element
+- [stratastax-http](https://github.com/buijs-dev/stratastax-http) - uses it in the reactive idempotency filter
+- [stratastax-persistence](https://github.com/buijs-dev/stratastax-persistence) - carries the transaction context as an ambient context element
+- [stratastax-style](https://github.com/buijs-dev/stratastax-style) - the Kotlin code style this library is formatted with

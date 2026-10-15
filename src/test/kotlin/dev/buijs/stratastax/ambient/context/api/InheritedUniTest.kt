@@ -17,11 +17,11 @@
 package dev.buijs.stratastax.ambient.context.api
 
 import io.smallrye.mutiny.coroutines.awaitSuspending
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import kotlin.coroutines.CoroutineContext
 
 internal class InheritedUniTest {
 
@@ -47,11 +47,10 @@ internal class InheritedUniTest {
         runBlocking {
             val (outer, inner) =
                 inheritedUni(TestUniElement("outer")) {
-                        val outerSeen = readTestUniElement()
-                        val innerSeen = inheritedUni { readTestUniElement() }.awaitSuspending()
-                        outerSeen to innerSeen
-                    }
-                    .awaitSuspending()
+                    val outerSeen = readTestUniElement()
+                    val innerSeen = inheritedUni { readTestUniElement() }.awaitSuspending()
+                    outerSeen to innerSeen
+                }.awaitSuspending()
             assertThat(outer).isEqualTo("outer")
             assertThat(inner).isNull()
         }
@@ -62,9 +61,8 @@ internal class InheritedUniTest {
         runBlocking {
             val bareRead =
                 inheritedUni(TestUniElement("carried")) {
-                        this@runBlocking.coroutineContext[TestUniElement]?.value
-                    }
-                    .awaitSuspending()
+                    this@runBlocking.coroutineContext[TestUniElement]?.value
+                }.awaitSuspending()
 
             val safeRead =
                 inheritedUni(TestUniElement("carried")) { readTestUniElement() }.awaitSuspending()
@@ -75,7 +73,10 @@ internal class InheritedUniTest {
     }
 }
 
-private class TestUniElement(val value: String) : PropagatedContextElement {
+private class TestUniElement(
+    val value: String,
+) : PropagatedContextElement {
+
     companion object Key : CoroutineContext.Key<TestUniElement>
 
     override val key: CoroutineContext.Key<TestUniElement>
